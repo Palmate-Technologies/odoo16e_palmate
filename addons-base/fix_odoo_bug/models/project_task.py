@@ -17,6 +17,12 @@ class Task(models.Model):
             [],
         )
         timeoff_task_ids = leave_type_read_group[0]['timesheet_task_ids'] if leave_type_read_group else []
+
+        #####################################################
+        timeoff_task_ids = timeoff_task_ids or []
+
+        #####################################################
+
         if self.env.company.leave_timesheet_task_id:
             timeoff_task_ids.append(self.env.company.leave_timesheet_task_id.id)
         if operator == '!=':
