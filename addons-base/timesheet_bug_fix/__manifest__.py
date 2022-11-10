@@ -16,7 +16,7 @@
 #
 ###################################################################################
 {
-    'name': 'Fix Odoo Bug',
+    'name': 'Timesheet Fix Bug',
     'summary': """""",
     'description': """""",
     'category': 'Base',
