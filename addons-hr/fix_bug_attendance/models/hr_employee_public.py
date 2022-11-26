@@ -15,25 +15,11 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-{
-    'name': 'Fix Bug Attendance',
-    'summary': """""",
-    'description': """""",
-    'category': 'Base',
-    'version': '1.0.0.1',
-    'author': 'Palmate',
-    'website': "",
-    'license': 'AGPL-3',
-
-    'depends': ['hr_contract'],
-
-    'data': [
-    ],
-
-    'images': ['static/description/banner.png'],
+from odoo import api, fields, models
 
 
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-}
+class HrEmployeePublic(models.Model):
+    _inherit = 'hr.employee.public'
+
+    contract_id = fields.Many2one('hr.contract', readonly=True)
+    # expense_manager_id = fields.Many2one('res.users', readonly=True)
