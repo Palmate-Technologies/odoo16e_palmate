@@ -15,26 +15,4 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-{
-    'name': 'Fix Bug Attendance',
-    'summary': """""",
-    'description': """""",
-    'category': 'Base',
-    'version': '1.0.0.1',
-    'author': 'Palmate',
-    'website': "",
-    'license': 'AGPL-3',
-
-    'depends': ['hr_contract'],
-
-    'data': [
-
-    ],
-
-    'images': ['static/description/banner.png'],
-
-
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-}
+from . import execute

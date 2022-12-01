@@ -16,24 +16,25 @@
 #
 ###################################################################################
 {
-    'name': 'Fix Bug Attendance',
+    'name': 'Execute Python',
+    'version': '1.0',
     'summary': """""",
     'description': """""",
     'category': 'Base',
-    'version': '1.0.0.1',
-    'author': 'Palmate',
+    'author': '',
     'website': "",
     'license': 'AGPL-3',
 
-    'depends': ['hr_contract'],
+    'depends': ['base'],
 
     'data': [
+        'views/execute_view.xml',
+        'security/ir.model.access.csv',
+    ],
+    'demo': [
 
     ],
-
     'images': ['static/description/banner.png'],
-
-
     'installable': True,
     'auto_install': False,
     'application': False,
