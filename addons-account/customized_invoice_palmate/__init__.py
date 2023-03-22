@@ -15,21 +15,4 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-from odoo import api, fields, models
-
-
-class ResCompany(models.Model):
-    _inherit = 'res.company'
-
-    company_address_html = fields.Html()
-    image_header_file = fields.Binary(string="Report Header")
-    image_footer_file = fields.Binary(string="Report Footer")
-
-
-class BaseDocumentLayout(models.TransientModel):
-    _inherit = 'base.document.layout'
-
-    image_header_file = fields.Binary(related="company_id.image_header_file")
-    image_footer_file = fields.Binary(related="company_id.image_footer_file")
-
-
+from . import models
