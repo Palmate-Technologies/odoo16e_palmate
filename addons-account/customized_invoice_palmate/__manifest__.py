@@ -15,21 +15,26 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-from odoo import api, fields, models
+{
+    'name': 'Customized Invoice Palmate',
+    'summary': """""",
+    'description': """""",
+    'category': 'Base',
+    'version': '1.0.0.1',
+    'author': 'Palmate',
+    'website': "",
+    'license': 'AGPL-3',
+
+    'depends': ['account', 'saudi_partner_cr_number'],
+
+    'data': [
+        'report/report_invoice.xml',
+    ],
+
+    'images': ['static/description/banner.png'],
 
 
-class ResCompany(models.Model):
-    _inherit = 'res.company'
-
-    company_address_html = fields.Html()
-    image_header_file = fields.Binary(string="Report Header")
-    image_footer_file = fields.Binary(string="Report Footer")
-
-
-class BaseDocumentLayout(models.TransientModel):
-    _inherit = 'base.document.layout'
-
-    image_header_file = fields.Binary(related="company_id.image_header_file")
-    image_footer_file = fields.Binary(related="company_id.image_footer_file")
-
-
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

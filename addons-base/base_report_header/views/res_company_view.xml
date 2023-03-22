@@ -11,6 +11,7 @@
                 <page string="Report Header">
                     <group>
                         <field name="image_header_file" widget="image"/>
+                        <field name="company_address_html" string="Company Address"/>
                     </group>
                     <group>
                         <field name="image_footer_file" widget="image"/>
