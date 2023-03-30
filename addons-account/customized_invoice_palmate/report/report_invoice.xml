@@ -246,465 +246,917 @@
             </div>
         </template>
 
-        <template id="report_invoice_tax_document">
-            <t t-call="customized_invoice_palmate.external_layout_standard">
-                <t t-set="o" t-value="o.with_context(lang=lang)"/>
-                <t t-set="company_ar" t-value="o.company_id.with_context(lang='ar_001')"/>
-                <t t-set="forced_vat"
-                   t-value="o.fiscal_position_id.foreign_vat"/> <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
-                <t t-set="partner_ar" t-value="o.partner_id.with_context(lang='ar_001')"/>
-                <t t-set="partner" t-value="o.partner_id"/>
-                <t t-if="partner.parent_id">
-                    <t t-set="partner" t-value="partner.parent_id"/>
-                    <t t-set="partner_ar" t-value="o.partner_id.parent_id.with_context(lang='ar_001')"/>
-                </t>
-                <style>
-                    @font-face { font-family: 'DroidKufiRegular'; src:
-                    URL('/customized_invoice_palmate/static/src/fonts/DroidKufi-Regular.ttf') format('truetype'); }
-                </style>
-                <t t-set="o_ar" t-value="o.with_context(lang='ar_001')"/>
-                <div class="page">
-                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;">
-                        <tr style="margin-top:25px;line-height:0.6cm;border-bottom:1px solid gray">
-<!--                            <t t-set="so_data" t-value="o.get_sale_order()"/>-->
-                            <td style="text-align:left;font-size:12px;padding:2px" width="10%">
-                                <span style="text-align:left;font-size:12px">INV No:</span>
-                            </td>
-                            <td style="text-align:center;font-weight:900;font-size:15px" width="20%">
-                                <span style="text-align:right;font-weight:900;font-size:15px" t-field="o.name"/>
-                            </td>
-                            <td style="padding:2px;text-align:right;font-size:12px;border-right:1px solid gray;font-family:DroidKufiRegular" width="10%">
-                                <span>رقم الفاتورة</span>
-                            </td>
-                            <td style="text-align:left;font-size:12px;padding:2px" width="7%">
-                                <span>DN No:</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px;border-right:1px solid gray" width="23%">
-<!--                                <span t-esc="o.delivery_note_number"/>-->
-<!--                                <span t-esc="','.join(o.delivery_note_ids.mapped('name'))"/>-->
-                            </td>
-                            <td style="text-align:left;font-size:12px;padding:2px" width="7%">
-                                <span>SO No:</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px;" width="23%">
-<!--                                <span t-esc="so_data and so_data['order_names'] or ''"/>-->
-                            </td>
-                        </tr>
-                        <tr style="margin-top:25px;line-height:0.6cm;border-bottom:1px solid gray">
-                            <td style="text-align:left;font-size:10px;padding:2px" width="10%">
-                                <span>INVOICE DATE:</span>
-                            </td>
-                            <td style="text-align:center;font-size:15px" width="20%">
-                                <span t-field="o.l10n_sa_confirmation_datetime" t-options='{"format": "dd/MM/y h:mm a"}'/>
-                            </td>
-                            <td style="padding:2px;text-align:right;font-size:12px;border-right:1px solid gray;font-family:DroidKufiRegular" width="10%">
+<!--        <template id="report_invoice_tax_document">-->
+<!--            <t t-call="customized_invoice_palmate.external_layout_standard">-->
+<!--                <t t-set="o" t-value="o.with_context(lang=lang)"/>-->
+<!--                <t t-set="company_ar" t-value="o.company_id.with_context(lang='ar_001')"/>-->
+<!--                <t t-set="forced_vat"-->
+<!--                   t-value="o.fiscal_position_id.foreign_vat"/> &lt;!&ndash; So that it appears in the footer of the report instead of the company VAT if it's set &ndash;&gt;-->
+<!--                <t t-set="partner_ar" t-value="o.partner_id.with_context(lang='ar_001')"/>-->
+<!--                <t t-set="partner" t-value="o.partner_id"/>-->
+<!--                <t t-if="partner.parent_id">-->
+<!--                    <t t-set="partner" t-value="partner.parent_id"/>-->
+<!--                    <t t-set="partner_ar" t-value="o.partner_id.parent_id.with_context(lang='ar_001')"/>-->
+<!--                </t>-->
+<!--                <style>-->
+<!--                    @font-face { font-family: 'DroidKufiRegular'; src:-->
+<!--                    URL('/customized_invoice_palmate/static/src/fonts/DroidKufi-Regular.ttf') format('truetype'); }-->
+<!--                </style>-->
+<!--                <t t-set="o_ar" t-value="o.with_context(lang='ar_001')"/>-->
+<!--                <div class="page">-->
+<!--                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;">-->
+<!--                        <tr style="margin-top:25px;line-height:0.6cm;border-bottom:1px solid gray">-->
+<!--&lt;!&ndash;                            <t t-set="so_data" t-value="o.get_sale_order()"/>&ndash;&gt;-->
+<!--                            <td style="text-align:left;font-size:12px;padding:2px" width="10%">-->
+<!--                                <span style="text-align:left;font-size:12px">INV No:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-weight:900;font-size:15px" width="20%">-->
+<!--                                <span style="text-align:right;font-weight:900;font-size:15px" t-field="o.name"/>-->
+<!--                            </td>-->
+<!--                            <td style="padding:2px;text-align:right;font-size:12px;border-right:1px solid gray;font-family:DroidKufiRegular" width="10%">-->
+<!--                                <span>رقم الفاتورة</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;font-size:12px;padding:2px" width="7%">-->
+<!--                                <span>DN No:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px;border-right:1px solid gray" width="23%">-->
+<!--&lt;!&ndash;                                <span t-esc="o.delivery_note_number"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span t-esc="','.join(o.delivery_note_ids.mapped('name'))"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;font-size:12px;padding:2px" width="7%">-->
+<!--                                <span>SO No:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px;" width="23%">-->
+<!--&lt;!&ndash;                                <span t-esc="so_data and so_data['order_names'] or ''"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr style="margin-top:25px;line-height:0.6cm;border-bottom:1px solid gray">-->
+<!--                            <td style="text-align:left;font-size:10px;padding:2px" width="10%">-->
+<!--                                <span>INVOICE DATE:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:15px" width="20%">-->
+<!--                                <span t-field="o.l10n_sa_confirmation_datetime" t-options='{"format": "dd/MM/y h:mm a"}'/>-->
+<!--                            </td>-->
+<!--                            <td style="padding:2px;text-align:right;font-size:12px;border-right:1px solid gray;font-family:DroidKufiRegular" width="10%">-->
 
-                            </td>
-                            <td style="text-align:left;font-size:10px;padding:2px" width="13%">
-                                <span>CUSTOMER PO No:</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px;border-right:1px solid gray" width="17%">
-                                <t t-if="o.ref">
-                                    <span t-field="o.ref"/>
-                                </t>
-<!--                                <t t-else="">-->
-<!--                                    <span t-field="o.customer_po_number"/>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;font-size:10px;padding:2px" width="13%">-->
+<!--                                <span>CUSTOMER PO No:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px;border-right:1px solid gray" width="17%">-->
+<!--                                <t t-if="o.ref">-->
+<!--                                    <span t-field="o.ref"/>-->
 <!--                                </t>-->
-                            </td>
-                            <td style="text-align:left;font-size:9px;padding:2px" width="8%">
-                                <span>WAY BILL NO:</span>
-                            </td>
-                            <td style="text-align:center;font-size:10px;" width="22%">
-<!--                                <span t-field="o.way_bill_no"/>-->
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100.8%;font-size:10px;border:1px solid gray;border-top:none;border-bottom:none">
-                        <tr width="50%">
-                            <td style="text-align:left;width:25%">
-                                <span style="font-family:DroidKufiRegular;">
-                                   ADDRESS
-                                </span>
-                            </td>
-                            <td style="text-align:right;width:25%;">
-                                <span style="font-family:DroidKufiRegular;">
-                                     عنوان
-                                </span>
-                            </td>
-                            <td style="text-align:left;width:25%;padding:1px">
-                                <span style="font-family:DroidKufiRegular;border-left:1px solid gray">
-                                    CUSTOMER DETAIL
-                                </span>
-                            </td>
-                            <td style="text-align:right;width:25%">
-                                <span style="font-family:DroidKufiRegular;vertical-align:top;">
-                                     تفاصيل العميل
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;border-top:none;font-size:10px">
-                        <tr>
-                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">
-                                <span style="color:#808080;">DISTRICT :</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px" width="25%">
-<!--                                <span t-field="partner.district"/>-->
+<!--&lt;!&ndash;                                <t t-else="">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span t-field="o.customer_po_number"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </t>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;font-size:9px;padding:2px" width="8%">-->
+<!--                                <span>WAY BILL NO:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:10px;" width="22%">-->
+<!--&lt;!&ndash;                                <span t-field="o.way_bill_no"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <table style="width:100.8%;font-size:10px;border:1px solid gray;border-top:none;border-bottom:none">-->
+<!--                        <tr width="50%">-->
+<!--                            <td style="text-align:left;width:25%">-->
+<!--                                <span style="font-family:DroidKufiRegular;">-->
+<!--                                   ADDRESS-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;width:25%;">-->
+<!--                                <span style="font-family:DroidKufiRegular;">-->
+<!--                                     عنوان-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;width:25%;padding:1px">-->
+<!--                                <span style="font-family:DroidKufiRegular;border-left:1px solid gray">-->
+<!--                                    CUSTOMER DETAIL-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;width:25%">-->
+<!--                                <span style="font-family:DroidKufiRegular;vertical-align:top;">-->
+<!--                                     تفاصيل العميل-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;border-top:none;font-size:10px">-->
+<!--                        <tr>-->
+<!--                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">-->
+<!--                                <span style="color:#808080;">DISTRICT :</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px" width="25%">-->
+<!--&lt;!&ndash;                                <span t-field="partner.district"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span style="color:white">##</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-if="partner.district != partner_ar.district">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.district"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </t>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺤﻲ</span>-->
+<!--                            </td>-->
+<!--                            <td style="padding:3px" width="18%">-->
+<!--                                <span style="color:#808080;">ACCOUNT NUMBER:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px" width="15%">-->
+<!--                                <t t-esc="partner.ref"/>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;padding:3px" width="17%">-->
+<!--                                <span style="font-family:DroidKufiRegular;text-align:right;color:#808080">:رقم الحساب-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">-->
+<!--                                <span style="color:#808080;">STREET:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:11px" width="25%">-->
+<!--                                <span t-field="partner.street"/>-->
 <!--                                <span style="color:white">##</span>-->
-<!--                                <t t-if="partner.district != partner_ar.district">-->
-<!--                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.district"/>-->
+<!--                                <t t-if="partner.street != partner_ar.street">-->
+<!--                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.street"/>-->
 <!--                                </t>-->
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺤﻲ</span>
-                            </td>
-                            <td style="padding:3px" width="18%">
-                                <span style="color:#808080;">ACCOUNT NUMBER:</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px" width="15%">
-                                <t t-esc="partner.ref"/>
-                            </td>
-                            <td style="text-align:right;padding:3px" width="17%">
-                                <span style="font-family:DroidKufiRegular;text-align:right;color:#808080">:رقم الحساب
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:اسم الشارع</span>-->
+<!--                            </td>-->
+<!--                            &lt;!&ndash;                        <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="18%">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <span style="color:#808080;">BUILDING No:</span>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        </td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        <td style="text-align:center" width="15%">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <span t-field="o.partner_id.building_no"/>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        </td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        </td>&ndash;&gt;-->
+<!--                            <td style="text-align:left;border-left: 1px solid gray;" width="18%">-->
+<!--                                <span style="color:#808080;"></span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center" width="15%">-->
+<!--                                &lt;!&ndash;                                <span t-field="o.partner_id.building_no"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;" width="17%">-->
+<!--                                &lt;!&ndash;                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;border-top:none;font-size:10px">-->
+<!--                        <tr>-->
+<!--                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">-->
+<!--                                <span style="color:#808080;">CITY:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:12px" width="25%">-->
+<!--                                <span t-field="partner.city"/>-->
+<!--                                <span style="color:white">##</span>-->
+<!--                                <t t-if="partner.city != partner_ar.city">-->
+<!--                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.city"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="16.1%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﻤﺪﻳﻨﺔ</span>-->
+<!--                            </td>-->
+<!--                            <td style="padding:3px" width="5.2%">-->
+<!--                                <span style="color:#808080;">NAME:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center" width="40%">-->
+<!--                                <t t-if="partner.name != partner_ar.name">-->
+<!--                                    <span style="font-family:DroidKufiRegular;font-size:12px;font-weight:900;"-->
+<!--                                          t-field="partner_ar.name" width="58%"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;padding:3px" width="5%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080">:الاسم</span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">-->
+<!--                                <span style="color:#808080;">COUNTRY:</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;font-size:11px" width="25%">-->
+<!--                                <span t-field="partner.country_id.name"/>-->
+<!--                                <span style="color:white">##</span>-->
+<!--                                <span style="font-family:DroidKufiRegular;">المملكة العربية السعودية</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17.1%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺒﻠﺪ</span>-->
+<!--                            </td>-->
+
+<!--                            <td width="5%">-->
+<!--                                <span></span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;" width="40%">-->
+<!--                                <span style="font-size:12px;font-weight:900;" t-esc="partner.name"/>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right" width="5%">-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080"></span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <table style="width:100.8%;border: 1px solid gray;border-top:none;;font-size:10px">-->
+<!--                        <tr>-->
+<!--                            <td style="text-align:left;padding:3px" width="18%">-->
+<!--                                <span style="color:#808080;">ADDL NUMBER:</span>-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:الرقم الاضافي</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;" width="16%">-->
+<!--                                <span style="color:#808080;">BUILDING No:</span>-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="16%">-->
+<!--                                <span style="color:#808080;">POST CODE</span>-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;font-size:9px">:رمز بريدي-->
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;padding:3px" width="18%">-->
+<!--                                <span style="color:#808080;width:10%;">VAT NUMBER:</span>-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;width:15%;">:ضريبة الشراء</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;color:white" width="15%">-->
+<!--                                <span>blank</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:right;padding:3px" width="17%">-->
+<!--                                <span style="color:#808080;">CR</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-->
+<!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺴﺠﻞ ﺍﻟﺘﺠﺎﺭﻱ</span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr style="font-size:12px">-->
+<!--                            <td style="text-align:center;padding:2px" width="18%">-->
+<!--&lt;!&ndash;                                <span t-field="partner.additional_no"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center" width="16%">-->
+<!--&lt;!&ndash;                                <span t-field="partner.building_no"/>&ndash;&gt;-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;border-right: 1px solid gray;padding:2px" width="16%">-->
+<!--                                <span style="color:white">########</span>-->
+<!--                                <span t-field="partner.zip"/>-->
+<!--                            </td>-->
+
+<!--                            <td style="text-align:center;padding:3px" width="18%">-->
+<!--                                <span t-field="partner.vat"/>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:left;color:white" width="15%">-->
+<!--                                <span>blank</span>-->
+<!--                            </td>-->
+<!--                            <td style="text-align:center;padding:3px" width="17%">-->
+<!--                                <span t-field="partner.cr_number"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <div style="width:100.8%;min-height:560px;border: 1px solid gray;border-color: #BFBFBF">-->
+<!--                        <table name="invoice_line_table" style="width:100%;margin-bottom: 10px;">-->
+<!--                            <thead>-->
+<!--                                <tr style="background-color:#E7E7E7;font-size:8px;font-weight:900;">-->
+<!--                                    <td style="border: 1px solid gray;text-align:left; padding:4px;width:0.7cm;border-top: none;border-left: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span>SN</span>-->
+<!--                                        <span style="font-family:DroidKufiRegular">الرقم</span>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:8cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        &lt;!&ndash;                                        <span style="font-family:DroidKufiRegular">ﺍﻟﺼﻨﻒ ﺭﻗﻢ ﻭ ﺍﻟﺒﻴﺎﻥ</span>&ndash;&gt;-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">لبيان و رقم الصنف</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>PRODUCT CODE &amp; DESCRIPTION</span>-->
+
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">ﺍﻟﻮﺣﺪﺓ</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>UNIT</span>-->
+
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">كمية</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>QTY</span>-->
+
+<!--                                    </td>-->
+<!--                                    &lt;!&ndash;                                    <td style="text-align:center; padding:4px"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        class="table-border-bottom-left-right-top">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <span style="font-family:DroidKufiRegular">كمية التعبئة</span>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <br></br>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <span>Pack QTY</span>&ndash;&gt;-->
+
+<!--                                    &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.3cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">سعر الوحدة ريال</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>SAR UNIT PRICE</span>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:0.5cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">الخصم</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">%</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>DISC.</span>-->
+
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">سعر بعد الخصم</span>-->
+<!--                                        <br/>-->
+<!--                                        <span>PRICE AFTER DISC</span>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">ﺍﻹﺟﻤﺎﻟﻲ ﺑﻌﺪ ﺍﻟﺨﺼﻢ</span>-->
+<!--                                        <br/>-->
+<!--                                        <span>TOTAL AFTER DISCOUNT</span>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:0.7cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">ﻧﺴﺒﺔ ﺍﻟﻀﺮﻳﺒﺔ</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>TAX RATE</span>-->
+
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">ﻗﻴﻤﺔ ﺍﻟﻀﺮﻳﺒﺔ</span>-->
+<!--                                        <br/>-->
+<!--                                        <br/>-->
+<!--                                        <span>TAX AMOUNT</span>-->
+
+<!--                                    </td>-->
+<!--                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:2cm;border-top: none;border-right: none;border-color: #BFBFBF">-->
+<!--                                        <br/>-->
+<!--                                        <span style="font-family:DroidKufiRegular">المجموع-->
+<!--                                           <span>(</span> (شامل ضريبة-->
+<!--                                        </span>-->
+<!--                                        <br/>-->
+<!--                                        <span>SUBTOTAL (INCLUDING VAT)</span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody class="invoice_tbody">-->
+<!--                                <t t-set="current_subtotal" t-value="0"/>-->
+<!--                                <t t-set="untaxed_amount_before_discount" t-value="0"/>-->
+<!--                                <t t-set="total_discount" t-value="0"/>-->
+<!--                                &lt;!&ndash;                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (l.product_id.name))"/>&ndash;&gt;-->
+
+<!--                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: l.sequence)"/>-->
+
+<!--                                <t t-set="i" t-value="0"/>-->
+<!--                                <t t-foreach="lines" t-as="line">-->
+<!--                                    <t t-set="i" t-value="i+1"/>-->
+<!--                                    <t t-if="i % 97 == 0">-->
+<!--                                        <![CDATA[-->
+<!--                                        </table>-->
+<!--                                        <p style="page-break-before:always;"></p>-->
+<!--                                        <table style="width:100%;font-size:12px;">-->
+<!--                                        ]]>-->
+<!--                                    </t>-->
+<!--                                    <tr style="border-bottom:none;font-size:9px;font-weight:900;">-->
+
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;;background-color:#E7E7E7;border-left:none;border-color: #BFBFBF">-->
+<!--                                            <span t-esc="i"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; padding:4px;border-color: #BFBFBF">-->
+<!--                                            <span style="text-align:left" t-field="line.product_id.default_code"/>-->
+<!--                                            <t t-if="line.product_id.name!= line.product_id.with_context(lang='ar_001').name">-->
+<!--                                                <span class="float-right"-->
+<!--                                                      style="text-align:right;font-family:DroidKufiRegular;font-size:9px"-->
+<!--                                                      t-field="line.product_id.with_context(lang='ar_001').name"/>-->
+<!--                                            </t>-->
+<!--                                            <br/>-->
+<!--                                            <span class="text-nowrap float-left" t-field="line.product_id.name"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">-->
+<!--                                            <t t-if="line.product_uom_id.name!= line.product_uom_id.with_context(lang='ar_001').name">-->
+<!--                                                <span style="font-family:DroidKufiRegular"-->
+<!--                                                      t-esc="line.product_uom_id.with_context(lang='ar_001').name"/>-->
+<!--                                                <br/>-->
+<!--                                            </t>-->
+<!--                                            &lt;!&ndash;                                            <span class="text-nowrap" t-field="line.product_uom_id.name"/>&ndash;&gt;-->
+<!--                                            <span class="text-nowrap" t-esc="line.product_uom_id.name"/>-->
+
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;background-color:#E7E7E7;border-color: #BFBFBF">-->
+<!--                                            <span style="font-size:12px" t-esc="'%.2f'% (line.quantity)"/>-->
+<!--                                            &lt;!&ndash;                                        <span t-field="line.product_uom_id"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                        &lt;!&ndash;                                    <td style="border: 1px solid black; text-align:right; padding:4px"&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        class="table-border-bottom-left-right-top">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <t t-if="line.product_uom_id.uom_type=='bigger'">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            <span t-esc="round(line.product_uom_id.factor_inv * line.quantity,2)"/>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        </t>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <t t-if="line.product_uom_id.uom_type=='smaller'">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            <span t-esc="round(line.product_uom_id.factor * line.quantity,2)"/>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        </t>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <t t-if="line.product_uom_id.uom_type=='reference'">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            <span t-field="line.quantity"/>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        </t>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">-->
+<!--                                            <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>-->
+<!--                                            <t t-set="untaxed_amount_before_discount"-->
+<!--                                               t-value="untaxed_amount_before_discount+(line.quantity * line.price_unit)"/>-->
+<!--                                            <t t-set="total_discount"-->
+<!--                                               t-value="total_discount+(line.quantity * line.price_unit) * line.discount/100"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">-->
+<!--                                            <span class="text-nowrap" t-esc="'%.0f'% (line.discount)"/>-->
+<!--                                            <t t-if="line.discount != 0">-->
+<!--                                                <span>%</span>-->
+<!--                                            </t>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF"-->
+<!--                                            class="table-border-bottom-left-right-top">-->
+<!--                                            <span t-esc="'{0:,.2f}'.format(line.price_unit - ((line.price_unit * (line.discount / 100))))"/>-->
+<!--                                            &lt;!&ndash;                                        <span t-esc="'%.2f'% untaxed_amount_before_discount"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">-->
+<!--                                            <span t-esc="'{0:,.2f}'.format(line.price_unit * line.quantity - (line.price_unit * line.quantity * line.discount / 100))"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF"-->
+<!--                                            class="table-border-bottom-left-right-top">-->
+<!--                                            <span class="text-nowrap" t-field="line.tax_ids.description"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">-->
+<!--                                            &lt;!&ndash;                                        <span t-esc="line.get_tax_amount(line.price_subtotal)"/>&ndash;&gt;-->
+<!--                                            <span t-esc="'{0:,.2f}'.format(round(line.price_total - line.price_subtotal,2))"/>-->
+<!--                                        </td>-->
+<!--                                        <td style="border: 1px solid gray; text-align:center; padding:4px;background-color:#E7E7E7;border-right:none;border-color: #BFBFBF;font-size:10px">-->
+<!--                                            <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>-->
+<!--                                            &lt;!&ndash;                                            <span class="text-nowrap" t-field="line.price_total"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                        &lt;!&ndash;                                    </t>&ndash;&gt;-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                &lt;!&ndash;                            </t>&ndash;&gt;-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </template>-->
+
+    <template id="report_invoice_tax_document">
+        <t t-call="customized_invoice_palmate.external_layout_standard">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/> <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
+
+            <t t-set="o_sec" t-value="o.with_context(lang='ar_001')"/>
+            <t t-set="o" t-value="o.with_context(lang='en_US')"/>
+
+            <div class="page">
+
+                <style>
+                    @font-face {
+                    font-family: 'ArabicDroidKufi';
+                    src: URL('/customized_invoice_palmate/static/src/fonts/Arabic-DroidKufi.ttf') format('truetype');
+                    }
+
+                </style>
+
+                <!-- Adjustment -->
+                <div style="display:none">
+                    <div name="due_date" style="display:none"/>
+                </div>
+
+                <br/>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="border:1px solid #8d8d8d; padding:2px; text-transform: uppercase; text-align:center; font-weight: bold;">
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
+                                VAT Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+                                Draft Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">
+                                Cancelled Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_refund'">
+                                Credit Note
+                            </span>
+                            <span t-if="o.move_type == 'in_refund'">
+                                Vendor Credit Note
+                            </span>
+                            <span t-if="o.move_type == 'in_invoice'">
+                                Vendor Bill
+                            </span>
+
+                            <br/>
+
+                            <span style="font-weight: normal; font-family:ArabicDroidKufi">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
+                                    فاتورة ضريبية
                                 </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">
-                                <span style="color:#808080;">STREET:</span>
-                            </td>
-                            <td style="text-align:center;font-size:11px" width="25%">
-                                <span t-field="partner.street"/>
-                                <span style="color:white">##</span>
-                                <t t-if="partner.street != partner_ar.street">
-                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.street"/>
-                                </t>
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:اسم الشارع</span>
-                            </td>
-                            <!--                        <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="18%">-->
-                            <!--                            <span style="color:#808080;">BUILDING No:</span>-->
-                            <!--                        </td>-->
-                            <!--                        <td style="text-align:center" width="15%">-->
-                            <!--                            <span t-field="o.partner_id.building_no"/>-->
-                            <!--                        </td>-->
-                            <!--                        <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17%">-->
-                            <!--                            <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>-->
-                            <!--                        </td>-->
-                            <td style="text-align:left;border-left: 1px solid gray;" width="18%">
-                                <span style="color:#808080;"></span>
-                            </td>
-                            <td style="text-align:center" width="15%">
-                                <!--                                <span t-field="o.partner_id.building_no"/>-->
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;" width="17%">
-                                <!--                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>-->
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100.8%;border: 1px solid gray;border-bottom:none;border-top:none;font-size:10px">
-                        <tr>
-                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">
-                                <span style="color:#808080;">CITY:</span>
-                            </td>
-                            <td style="text-align:center;font-size:12px" width="25%">
-                                <span t-field="partner.city"/>
-                                <span style="color:white">##</span>
-                                <t t-if="partner.city != partner_ar.city">
-                                    <span style="font-family:DroidKufiRegular;" t-esc="partner_ar.city"/>
-                                </t>
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="16.1%">
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﻤﺪﻳﻨﺔ</span>
-                            </td>
-                            <td style="padding:3px" width="5.2%">
-                                <span style="color:#808080;">NAME:</span>
-                            </td>
-                            <td style="text-align:center" width="40%">
-                                <t t-if="partner.name != partner_ar.name">
-                                    <span style="font-family:DroidKufiRegular;font-size:12px;font-weight:900;"
-                                          t-field="partner_ar.name" width="58%"/>
-                                </t>
-                            </td>
-                            <td style="text-align:right;padding:3px" width="5%">
-                                <span style="font-family:DroidKufiRegular;color:#808080">:الاسم</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;border-left: 1px solid gray;padding:3px" width="8%">
-                                <span style="color:#808080;">COUNTRY:</span>
-                            </td>
-                            <td style="text-align:center;font-size:11px" width="25%">
-                                <span t-field="partner.country_id.name"/>
-                                <span style="color:white">##</span>
-                                <span style="font-family:DroidKufiRegular;">المملكة العربية السعودية</span>
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="17.1%">
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺒﻠﺪ</span>
-                            </td>
-
-                            <td width="5%">
-                                <span></span>
-                            </td>
-                            <td style="text-align:center;" width="40%">
-                                <span style="font-size:12px;font-weight:900;" t-esc="partner.name"/>
-                            </td>
-                            <td style="text-align:right" width="5%">
-                                <span style="font-family:DroidKufiRegular;color:#808080"></span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100.8%;border: 1px solid gray;border-top:none;;font-size:10px">
-                        <tr>
-                            <td style="text-align:left;padding:3px" width="18%">
-                                <span style="color:#808080;">ADDL NUMBER:</span>
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:الرقم الاضافي</span>
-                            </td>
-                            <td style="text-align:center;" width="16%">
-                                <span style="color:#808080;">BUILDING No:</span>
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺭﻗﻢ ﺍﻟﻤﺒﻨﻰ</span>
-                            </td>
-                            <td style="text-align:right;border-right: 1px solid gray;padding:3px" width="16%">
-                                <span style="color:#808080;">POST CODE</span>
-                                <span style="font-family:DroidKufiRegular;color:#808080;font-size:9px">:رمز بريدي
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+                                    مسودة فاتورة
                                 </span>
-                            </td>
-                            <td style="text-align:left;padding:3px" width="18%">
-                                <span style="color:#808080;width:10%;">VAT NUMBER:</span>
-                                <span style="font-family:DroidKufiRegular;color:#808080;width:15%;">:ضريبة الشراء</span>
-                            </td>
-                            <td style="text-align:left;color:white" width="15%">
-                                <span>blank</span>
-                            </td>
-                            <td style="text-align:right;padding:3px" width="17%">
-                                <span style="color:#808080;">CR</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                <span style="font-family:DroidKufiRegular;color:#808080;">:ﺍﻟﺴﺠﻞ ﺍﻟﺘﺠﺎﺭﻱ</span>
-                            </td>
-                        </tr>
-                        <tr style="font-size:12px">
-                            <td style="text-align:center;padding:2px" width="18%">
-<!--                                <span t-field="partner.additional_no"/>-->
-                            </td>
-                            <td style="text-align:center" width="16%">
-<!--                                <span t-field="partner.building_no"/>-->
-                            </td>
-                            <td style="text-align:center;border-right: 1px solid gray;padding:2px" width="16%">
-                                <span style="color:white">########</span>
-                                <span t-field="partner.zip"/>
-                            </td>
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">
+                                    فاتورة ملغاة
+                                </span>
+                                <span t-if="o.move_type == 'out_refund'">
+                                    إشعار خصم
+                                </span>
+                                <span t-if="o.move_type == 'in_refund'">
+                                    إشعار خصم المورد
+                                </span>
+                                <span t-if="o.move_type == 'in_invoice'">
+                                    فاتورة المورد
+                                </span>
+                            </span>
 
-                            <td style="text-align:center;padding:3px" width="18%">
-                                <span t-field="partner.vat"/>
-                            </td>
-                            <td style="text-align:left;color:white" width="15%">
-                                <span>blank</span>
-                            </td>
-                            <td style="text-align:center;padding:3px" width="17%">
-                                <span t-field="partner.cr_number"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <div style="width:100.8%;min-height:560px;border: 1px solid gray;border-color: #BFBFBF">
-                        <table name="invoice_line_table" style="width:100%;margin-bottom: 10px;">
-                            <thead>
-                                <tr style="background-color:#E7E7E7;font-size:8px;font-weight:900;">
-                                    <td style="border: 1px solid gray;text-align:left; padding:4px;width:0.7cm;border-top: none;border-left: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span>SN</span>
-                                        <span style="font-family:DroidKufiRegular">الرقم</span>
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:8cm;border-top: none;border-color: #BFBFBF">
-                                        <!--                                        <span style="font-family:DroidKufiRegular">ﺍﻟﺼﻨﻒ ﺭﻗﻢ ﻭ ﺍﻟﺒﻴﺎﻥ</span>-->
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">لبيان و رقم الصنف</span>
-                                        <br/>
-                                        <br/>
-                                        <span>PRODUCT CODE &amp; DESCRIPTION</span>
 
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">ﺍﻟﻮﺣﺪﺓ</span>
-                                        <br/>
-                                        <br/>
-                                        <span>UNIT</span>
+                        </td>
+                    </tr>
+                </table>
 
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">كمية</span>
-                                        <br/>
-                                        <br/>
-                                        <span>QTY</span>
 
-                                    </td>
-                                    <!--                                    <td style="text-align:center; padding:4px"-->
-                                    <!--                                        class="table-border-bottom-left-right-top">-->
-                                    <!--                                        <span style="font-family:DroidKufiRegular">كمية التعبئة</span>-->
-                                    <!--                                        <br></br>-->
-                                    <!--                                        <span>Pack QTY</span>-->
+<div style="height:10px"/>
 
-                                    <!--                                    </td>-->
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.3cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">سعر الوحدة ريال</span>
-                                        <br/>
-                                        <br/>
-                                        <span>SAR UNIT PRICE</span>
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:0.5cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">الخصم</span>
-                                        <br/>
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">%</span>
-                                        <br/>
-                                        <br/>
-                                        <span>DISC.</span>
+                     <table style="width:100%; font-size:12px">
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:left;" rowspan="6">
 
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">سعر بعد الخصم</span>
-                                        <br/>
-                                        <span>PRICE AFTER DISC</span>
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">ﺍﻹﺟﻤﺎﻟﻲ ﺑﻌﺪ ﺍﻟﺨﺼﻢ</span>
-                                        <br/>
-                                        <span>TOTAL AFTER DISCOUNT</span>
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:0.7cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">ﻧﺴﺒﺔ ﺍﻟﻀﺮﻳﺒﺔ</span>
-                                        <br/>
-                                        <br/>
-                                        <span>TAX RATE</span>
+                                 <t t-set="address"><address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' style="text-align: right; display:none"/></t>
+                                 <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' style="text-align: left"/>
+                                 <div t-if="o.partner_id.vat" class="mt16" style="text-align: right">
+                                     <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-esc="o.company_id.account_fiscal_country_id.vat_label" id="inv_tax_id_label"/>
+                                     <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
 
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:1.5cm;border-top: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">ﻗﻴﻤﺔ ﺍﻟﻀﺮﻳﺒﺔ</span>
-                                        <br/>
-                                        <br/>
-                                        <span>TAX AMOUNT</span>
+                             </td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:left;"><span>INVOICE NUMBER :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:center;"><span t-if="o.name != '/'" t-field="o.name"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:right; font-family:ArabicDroidKufi"><span>: رقم الفاتورة</span></td>
+                         </tr>
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>INVOICE DATE :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_date"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"><span style="white-space:nowrap">: تاريخ الفاتورة</span></td>
+                         </tr>
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>DUE DATE :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_date_due"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: تاريخ الاستحقاق</span></td>
+                         </tr>
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>SOURCE :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_origin"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: المصدر</span></td>
+                         </tr>
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>CUSTOMER CODE :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.partner_id.ref"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: كود العميل</span></td>
+                         </tr>
+                         <tr>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>REFERENCE :</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.ref"/></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: رقم الإشارة</span></td>
+                         </tr>
+                     </table>
 
-                                    </td>
-                                    <td style="border: 1px solid gray;text-align:center; padding:4px;width:2cm;border-top: none;border-right: none;border-color: #BFBFBF">
-                                        <br/>
-                                        <span style="font-family:DroidKufiRegular">المجموع
-                                           <span>(</span> (شامل ضريبة
-                                        </span>
-                                        <br/>
-                                        <span>SUBTOTAL (INCLUDING VAT)</span>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody class="invoice_tbody">
-                                <t t-set="current_subtotal" t-value="0"/>
-                                <t t-set="untaxed_amount_before_discount" t-value="0"/>
-                                <t t-set="total_discount" t-value="0"/>
-                                <!--                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>-->
-<!--                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (l.product_id.name))"/>-->
 
-                                <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: l.sequence)"/>
+                                    <div style="height:10px"/>
 
-                                <t t-set="i" t-value="0"/>
-                                <t t-foreach="lines" t-as="line">
-                                    <t t-set="i" t-value="i+1"/>
-                                    <t t-if="i % 97 == 0">
-                                        <![CDATA[
-                                        </table>
-                                        <p style="page-break-before:always;"></p>
-                                        <table style="width:100%;font-size:12px;">
-                                        ]]>
-                                    </t>
-                                    <tr style="border-bottom:none;font-size:9px;font-weight:900;">
+                    <t t-set="line_count" t-value="0"/>
+                    <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
+                    <table style="width:100%; font-size:12px">
+                        <thead>
+                            <tr>
+                                <t t-set="colspan" t-value="6"/>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" class="text-center">
+                                    <span>
+                                        SL
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        الرقم
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" class="text-left">
+                                    <span>
+                                        Description
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        الوصف
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" name="th_source" class="d-none text-left" t-if="0">
+                                    <span>
+                                        Source Document
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        المستند المصدر
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d;  padding:2px;" name="th_quantity" class="text-right">
+                                    <span>
+                                        Quantity
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        الكمية
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" name="th_priceunit"
+                                    class="text-right">
+                                    <span>
+                                        Unit price
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        سعر الوحدة
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" name="th_price_unit" t-if="display_discount"
+                                    class="text-right">
+                                    <span>
+                                        Disc.%
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        خصم %
+                                    </span>
+                                    <t t-set="colspan" t-value="colspan+1"/>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" name="th_taxes"
+                                    class="text-right">
+                                    <span>
+                                        Taxes
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        الضرائب
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d;  padding:2px;" name="th_subtotal" class="text-right">
+                                    <span>
+                                        Amount
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        مبلغ
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d; padding:2px;" name="th_tax_amount"
+                                    class="text-right">
+                                    <span>
+                                        VAT Amount
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        قيمة الضريبة
+                                    </span>
+                                </td>
+                                <td style="border:1px solid #8d8d8d;  padding:2px;" name="th_total" class="text-right">
+                                    <span>
+                                        Total Price
+                                    </span>
+                                    <br/>
+                                    <span style="font-family:ArabicDroidKufi">
+                                        السعر الاجمالي
+                                    </span>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="lines"
+                               t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
 
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;;background-color:#E7E7E7;border-left:none;border-color: #BFBFBF">
-                                            <span t-esc="i"/>
+
+                            <t t-foreach="lines" t-as="line">
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                                   groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                                   groups="account.group_show_line_subtotals_tax_included"/>
+
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
+                                        <t t-set="line_count" t-value="line_count+1"/>
+                                        <td style="border:1px solid #8d8d8d;  padding:2px; text-align:center">
+                                            <span t-esc="line_count"/>
                                         </td>
-                                        <td style="border: 1px solid gray; padding:4px;border-color: #BFBFBF">
-                                            <span style="text-align:left" t-field="line.product_id.default_code"/>
-                                            <t t-if="line.product_id.name!= line.product_id.with_context(lang='ar_001').name">
-                                                <span class="float-right"
-                                                      style="text-align:right;font-family:DroidKufiRegular;font-size:9px"
-                                                      t-field="line.product_id.with_context(lang='ar_001').name"/>
-                                            </t>
-                                            <br/>
-                                            <span class="text-nowrap float-left" t-field="line.product_id.name"/>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">
-                                            <t t-if="line.product_uom_id.name!= line.product_uom_id.with_context(lang='ar_001').name">
-                                                <span style="font-family:DroidKufiRegular"
-                                                      t-esc="line.product_uom_id.with_context(lang='ar_001').name"/>
+                                        <td name="account_invoice_line_name" style="border:1px solid #8d8d8d;  padding:2px;">
+    <!--                                        <span t-field="line.product_id.name" t-options="{'widget': 'text'}"/>-->
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                            <t t-if="line.product_id.name != line.with_context(lang='ar_001').product_id.name">
                                                 <br/>
+                                                <span t-field="line.with_context(lang='ar_001').product_id.name"
+                                                      t-options="{'widget': 'text'}"/>
                                             </t>
-                                            <!--                                            <span class="text-nowrap" t-field="line.product_uom_id.name"/>-->
-                                            <span class="text-nowrap" t-esc="line.product_uom_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span t-field="line.quantity"/>
+                                            <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span class="text-nowrap" t-field="line.price_unit"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" t-if="display_discount"
+                                            class="text-right">
+                                            <span class="text-nowrap" t-field="line.discount"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
+                                                  id="line_tax_ids"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right o_price_total">
+                                            <span class="text-nowrap" t-field="line.price_subtotal"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span class="text-nowrap" t-field="line.l10n_gcc_invoice_tax_amount"/>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right o_price_total">
+                                            <span class="text-nowrap" t-field="line.price_total"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" colspan="99">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" colspan="99">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                    </t>
+                                </tr>
 
+                                <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                                    <tr>
+                                        <td colspan="99"  style="border:1px solid #8d8d8d;  padding:2px;">
+                                            <strong class="mr16" style="display: inline-block">Subtotal/الإجمالي الفرعي</strong>
+                                            <span
+                                                    t-out="current_subtotal"
+                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                            />
                                         </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;background-color:#E7E7E7;border-color: #BFBFBF">
-                                            <span style="font-size:12px" t-esc="'%.2f'% (line.quantity)"/>
-                                            <!--                                        <span t-field="line.product_uom_id"/>-->
-                                        </td>
-                                        <!--                                    <td style="border: 1px solid black; text-align:right; padding:4px"-->
-                                        <!--                                        class="table-border-bottom-left-right-top">-->
-                                        <!--                                        <t t-if="line.product_uom_id.uom_type=='bigger'">-->
-                                        <!--                                            <span t-esc="round(line.product_uom_id.factor_inv * line.quantity,2)"/>-->
-                                        <!--                                        </t>-->
-                                        <!--                                        <t t-if="line.product_uom_id.uom_type=='smaller'">-->
-                                        <!--                                            <span t-esc="round(line.product_uom_id.factor * line.quantity,2)"/>-->
-                                        <!--                                        </t>-->
-                                        <!--                                        <t t-if="line.product_uom_id.uom_type=='reference'">-->
-                                        <!--                                            <span t-field="line.quantity"/>-->
-                                        <!--                                        </t>-->
-                                        <!--                                    </td>-->
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">
-                                            <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
-                                            <t t-set="untaxed_amount_before_discount"
-                                               t-value="untaxed_amount_before_discount+(line.quantity * line.price_unit)"/>
-                                            <t t-set="total_discount"
-                                               t-value="total_discount+(line.quantity * line.price_unit) * line.discount/100"/>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">
-                                            <span class="text-nowrap" t-esc="'%.0f'% (line.discount)"/>
-                                            <t t-if="line.discount != 0">
-                                                <span>%</span>
-                                            </t>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF"
-                                            class="table-border-bottom-left-right-top">
-                                            <span t-esc="'{0:,.2f}'.format(line.price_unit - ((line.price_unit * (line.discount / 100))))"/>
-                                            <!--                                        <span t-esc="'%.2f'% untaxed_amount_before_discount"/>-->
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">
-                                            <span t-esc="'{0:,.2f}'.format(line.price_unit * line.quantity - (line.price_unit * line.quantity * line.discount / 100))"/>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF"
-                                            class="table-border-bottom-left-right-top">
-                                            <span class="text-nowrap" t-field="line.tax_ids.description"/>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;border-color: #BFBFBF">
-                                            <!--                                        <span t-esc="line.get_tax_amount(line.price_subtotal)"/>-->
-                                            <span t-esc="'{0:,.2f}'.format(round(line.price_total - line.price_subtotal,2))"/>
-                                        </td>
-                                        <td style="border: 1px solid gray; text-align:center; padding:4px;background-color:#E7E7E7;border-right:none;border-color: #BFBFBF;font-size:10px">
-                                            <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>
-                                            <!--                                            <span class="text-nowrap" t-field="line.price_total"/>-->
-                                        </td>
-                                        <!--                                    </t>-->
                                     </tr>
                                 </t>
-                                <!--                            </t>-->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </t>
-        </template>
+                            </t>
+                        </tbody>
+                    </table>
+
+
+
+
+                    <div style="height:10px"/>
+
+                    <table style="width:100% ; font-size:12px; border-style: hidden;">
+                        <tr>
+                            <td style="width:50%; border-style: hidden;">
+                                Amount in Words: <span t-esc="o.get_amount_in_text(o.amount_total)"/>
+                            </td>
+                            <td>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;">
+                                            <span>
+                                                Subtotal
+                                                /
+                                                <span style="font-family:ArabicDroidKufi">الإجمالي الفرعي</span>
+                                            </span>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+
+                                    <t t-set="tax_amount" t-value="o.amount_total - o.amount_untaxed"/>
+                                    <t t-if="o.amount_untaxed">
+                                        <t t-set="tax_percent" t-value="(tax_amount / o.amount_untaxed) * 100"/>
+                                    </t>
+
+                                    <tr t-if="tax_amount">
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;">
+                                            <table style="border-style: hidden;">
+                                                <tr>
+                                                    <td style="border-style: hidden;">Taxes</td>
+                                                    <td style="border-style: hidden;">(<span t-esc="tax_percent"/> %)</td>
+                                                    <td style="border-style: hidden;">/</td>
+                                                    <td style="border-style: hidden;"><span style="font-family:ArabicDroidKufi">الضريبة</span></td>
+                                                </tr>
+                                            </table>
+                                            <span>
+
+                                            </span>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span t-esc="tax_amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="border-black o_total">
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;">
+                                            <span>
+                                                Total
+                                                /
+                                                <span style="font-family:ArabicDroidKufi">المجموع</span>
+
+                                            </span>
+                                        </td>
+                                        <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
+                                            <span class="text-nowrap" t-field="o.amount_total"/>
+                                        </td>
+                                    </tr>
+
+                                    <t t-if="print_with_payments">
+                                        <t t-if="o.payment_state != 'invoicing_legacy'">
+                                            <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                                            <t t-foreach="payments_vals" t-as="payment_vals">
+                                                <tr class="border-black o_total">
+                                                    <td>
+                                                        <i class="row">
+                                                            <div class="col-7 oe_form_field oe_payment_label">
+                                                                Paid on/دفعت في:
+                                                            </div>
+                                                            <div class="col-5 pl-0 oe_form_field oe_payment_label">
+                                                                <t t-out="payment_vals['date']"/>
+                                                            </div>
+                                                        </i>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-out="payment_vals['amount']"
+                                                              t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="len(payments_vals) > 0">
+                                                <tr class="border-black">
+                                                    <td>
+                                                        <strong>
+                                                            Amount Due
+                                                            /
+                                                            المبلغ المستحق
+                                                        </strong>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-field="o.amount_residual"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+<table style="width:100% ; font-size:12px; border-style: hidden;">
+                        <tr>
+                            <td style="width:50%; border-style: hidden;">
+                                <span>Payment Reference:</span><span t-field="o.name"/><br/>
+                                <span>رقم إشارة الدفعة</span><br/>
+                                <span>Payment terms:</span><span t-field="o.invoice_payment_term_id.name"/>
+                            </td>
+                            <td style="width:50%; border-style: hidden;">
+
+                            </td>
+                        </tr>
+</table>
+
+                    <table style="width:100% ; font-size:12px; border-style: hidden;">
+                        <tr>
+                            <td style="width:50%; border-style: hidden;">
+                                <span>Bank Account Details</span><br/>
+                                <span>Name : Palm Information Technology Est.</span><br/>
+                                <span>Bank : National Commercial Bank</span><br/>
+                                <span>BAN : SA2110000074000000076207</span><br/>
+                                <span>A/C # : 74000000076207</span>
+                            </td>
+                            <td style="text-align:right; border-style: hidden;">
+                                <p class="text-right">
+                                    <img t-if="o.l10n_sa_qr_code_str"
+                                         style="display:block;"
+                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 130, 130)"/>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="height:10px"/>
+
+            </div>
+        </t>
+    </template>
+
 
         <template id="report_invoice_tax">
             <t t-call="web.html_container">

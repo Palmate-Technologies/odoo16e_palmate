@@ -29,6 +29,7 @@
 
     'data': [
         'report/report_invoice.xml',
+        'report/layout.xml',
     ],
 
     'images': ['static/description/banner.png'],

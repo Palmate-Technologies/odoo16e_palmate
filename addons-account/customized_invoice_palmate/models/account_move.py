@@ -27,6 +27,8 @@ except ImportError:
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    report_show_header = fields.Boolean(default=True)
+
     def get_total_discount(self):
         disc_amount = 0
         for line in self.invoice_line_ids:
@@ -34,6 +36,12 @@ class AccountMove(models.Model):
                 disc_amount += (line.quantity * line.price_unit) * (line.discount / 100)
 
         return disc_amount
+
+
+    def get_amount_in_text(self, amount):
+        self.ensure_one()
+        text = self.currency_id.amount_to_text(amount)
+        return text
 
     # def get_amount_ar(self, amount=0.0):
     #     if num2words is None:
