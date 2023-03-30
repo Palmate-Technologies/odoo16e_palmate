@@ -1141,8 +1141,8 @@
                                 <span>BAN : SA2110000074000000076207</span><br/>
                                 <span>A/C # : 74000000076207</span>
                             </td>
-                            <td style="text-align:right; border-style: hidden;">
-                                <p class="text-right">
+                            <td style="border-style: hidden;">
+                                <p>
                                     <img t-if="o.l10n_sa_qr_code_str"
                                          style="display:block;"
                                          t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 130, 130)"/>
