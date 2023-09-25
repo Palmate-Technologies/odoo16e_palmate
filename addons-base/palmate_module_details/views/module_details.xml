@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View form -->
+    <record id="view_form_module_details" model="ir.ui.view">
+        <field name="name">module.available.view.form</field>
+        <field name="model">module.available</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="With Attachments" bg_color="bg-primary" attrs="{'invisible': [('message_attachment_count', '=', 0)]}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="App Name"/></h1>
+                        <field name="purpose" placeholder="Purpose"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="developed_by"/>
+                            <field name="message_attachment_count" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="category_id" widget="selection" required="1"/>
+                            <field name="version_ids" widget="many2many_tags" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" nolabel="1" placeholder="Description"/>
+                    </group>
+                    <group>
+                        <field name="repo_link" placeholder="Eg. https://github.com/Palmate-Technologies/addons-pos.git"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    menu view list-->
+    <record id="view_tree_module_details" model="ir.ui.view">
+        <field name="name">module.available.view.tree</field>
+        <field name="model">module.available</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="App"/>
+                <field name="purpose"/>
+                <field name="category_id"/>
+                <field name="developed_by"/>
+                <field name="version_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="module_details_search" model="ir.ui.view">
+        <field name="name">module.available.search</field>
+        <field name="model">module.available</field>
+        <field name="arch" type="xml">
+            <search string="Search Details">
+                <field name="name" string="Name"
+                       filter_domain="['|','|','|','|','|','|',('name', 'ilike', self),('purpose', 'ilike', self),('category_id', 'ilike', self),('developed_by', 'ilike', self),('version_ids', 'ilike', self),('repo_link', 'ilike', self),('description', 'ilike', self)]"/>
+                <field name="purpose" string="Purpose"/>
+                <field name="category_id" string="Category"/>
+                <field name="developed_by" string="Developed By"/>
+                <field name="version_ids" string="Version"/>
+                <field name="repo_link" string="Repo Link"/>
+                <field name="description" string="Description"/>
+
+            </search>
+        </field>
+    </record>
+
+    <!--    menu action-->
+    <record id="action_module_details" model="ir.actions.act_window">
+        <field name="name">Available Apps</field>
+        <field name="res_model">module.available</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <!--    menu creation-->
+    <menuitem id="menu_module_details" name="Available Apps" sequence="30" parent="project.menu_main_pm" action="action_module_details"/>
+
+    <record id="view_form_module_available_category" model="ir.ui.view">
+        <field name="name">module.available.category.view.form</field>
+        <field name="model">module.available.category</field>
+        <field name="arch" type="xml">
+            <form string="Category Master">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_tree_module_available_category" model="ir.ui.view">
+        <field name="name">module.available.category.view.tree</field>
+        <field name="model">module.available.category</field>
+        <field name="arch" type="xml">
+            <tree string="Category Master">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_module_available_category" model="ir.actions.act_window">
+        <field name="name">Apps Categories</field>
+        <field name="res_model">module.available.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_config_module_available_category"
+              action="action_module_available_category"
+              parent="project.menu_project_config"
+              sequence="13"/>
+
+    <record id="view_form_module_available_version" model="ir.ui.view">
+        <field name="name">module.available.version.view.form</field>
+        <field name="model">module.available.version</field>
+        <field name="arch" type="xml">
+            <form string="Version Master">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_tree_module_available_version" model="ir.ui.view">
+        <field name="name">module.available.version.view.tree</field>
+        <field name="model">module.available.version</field>
+        <field name="arch" type="xml">
+            <tree string="Version Master">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_module_available_version" model="ir.actions.act_window">
+        <field name="name">Apps Versions</field>
+        <field name="res_model">module.available.version</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_config_module_available_version"
+              action="action_module_available_version"
+              parent="project.menu_project_config"
+              name="Apps Versions"
+              sequence="14"/>
+
+</odoo>
