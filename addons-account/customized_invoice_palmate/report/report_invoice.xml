@@ -1134,11 +1134,23 @@
 
                     <table style="width:100% ; font-size:12px; border-style: hidden;">
                         <tr>
+<!--                            <td style="width:50%; border-style: hidden;">-->
+<!--                                <span>Bank Account Details</span><br/>-->
+<!--                                <span>Name : Palm Information Technology Est.</span><br/>-->
+<!--                                <span>Bank : National Commercial Bank</span><br/>-->
+<!--                                <span>BAN : SA2110000074000000076207</span><br/>-->
+<!--                                <span>A/C # : 74000000076207</span>-->
+<!--                            </td>  -->
                             <td style="width:50%; border-style: hidden;">
-                                <span>Bank Account Details</span><br/>
-                                <span>Name : Palm Information Technology Est.</span><br/>
+                                <span>Bank Account Details:</span><br/>
+                                <span>Name : Palmate Technologies Co.</span><br/>
+                                <span>Bank : SABB Bank</span><br/>
+                                <span>IBAN : SA8345000000852158435001</span><br/>
+                                <span>A/C # : 852158435001</span><b/>
+                                <br/>
+                                <span>Name : Palmate Technologies Co.</span><br/>
                                 <span>Bank : National Commercial Bank</span><br/>
-                                <span>BAN : SA2110000074000000076207</span><br/>
+                                <span>IBAN : SA2110000074000000076207</span><br/>
                                 <span>A/C # : 74000000076207</span>
                             </td>
                             <td style="border-style: hidden;">
