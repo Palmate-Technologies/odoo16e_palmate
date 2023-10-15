@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="report_proforma_invoice_custom">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="address">
+                <div t-esc="partner"/>
+                <div t-esc="partner_address"/>
+                    <div> <span t-esc="partner_zip"/><span style="color:white">#</span><span t-esc="partner_city"/></div>
+                <div t-esc="partner_country"/>
+                    <t t-if="partner_vat"><div><span>VAT Number:</span><span style="color:white">#</span><span t-esc="partner_vat"/></div></t>
+
+<!--            <p t-if="doc.partner_id.vat"><t t-out="doc.company_id.account_fiscal_country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.partner_id.vat"/></p>-->
+        </t>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <h2 class="mt-4">
+                        <span style="color:red">Pro-Forma Invoice # </span><span style="color:red" t-esc="name"/>
+                    </h2>
+                    <div class="row mt-4 mb-4" id="informations_custom">
+                        <div t-if="customer_ref" class="col-auto col-3 mw-100 mb-2" name="informations_customer_ref">
+                            <strong>Your Reference:</strong>
+                            <p class="m-0" t-esc="customer_ref"/>
+                        </div>
+                        <div t-if="order_date" class="col-auto col-3 mw-100 mb-2" name="informations_order_date">
+                            <strong>Order Date:</strong>
+                            <p class="m-0" t-esc="order_date" t-options='{"widget": "date"}'/>
+                        </div>
+                        <div t-if="validity_date"
+                             class="col-auto col-3 mw-100 mb-2"
+                             name="informations_validity_date">
+                            <strong>Expiration:</strong>
+                            <p class="m-0" t-esc="validity_date"/>
+                        </div>
+                        <div t-if="salesperson" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Salesperson:</strong>
+                            <p class="m-0" t-esc="salesperson"/>
+                        </div>
+                    </div>
+                    <table class="table table-sm o_main_table table-borderless mt-4">
+                        <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th name="th_description" class="text-start">Description</th>
+                                <th name="th_quantity" class="text-end">Quantity</th>
+                                <th name="th_subtotal" class="text-end">
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!--                                    <t t-if="not line.display_type">-->
+                                <td name="td_name">
+                                    <span t-esc="description"/>
+                                    <!--                                            <span t-esc="doc.env.context.get('desc')"/>-->
+                                </td>
+                                <td name="td_quantity" class="text-end">
+                                    <span t-esc="quantity"/>
+                                    <!--                                            <span t-field="line.product_uom_qty"/>-->
+                                    <!--                                            <span t-field="line.product_uom"/>-->
+                                </td>
+                                <td name="td_subtotal"
+                                    class="text-end o_price_total">
+                                    <span t-esc="amount"
+                                          groups="account.group_show_line_subtotals_tax_excluded"/>&#160;<span t-if="amount > 0" t-esc="currency_symbol"/>
+                                    <!--                                    <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>-->
+                                </td>
+                            </tr>
+                            <tr><td><span style="color:white">#</span></td></tr>
+                            <tr class="is-subtotal text-end" style="border-top:1px solid black">
+                                <td name="td_section_subtotal" colspan="99" style="border-top:1px solid black">
+                                    <strong class="mr16">Total</strong>
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-esc="amount"
+                                          groups="account.group_show_line_subtotals_tax_excluded"/>&#160;<span t-if="amount > 0" t-esc="currency_symbol"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:100px">
+                        <p t-if="notes">
+                            <span t-raw="notes"/>
+                        </p>
+                    </div>
+                    <div>
+                        <br/>
+                        <p t-if="payment_term">
+                            <span>Payment Terms:</span>
+                            <span style="color:white">#</span>
+                            <span t-esc="payment_term"/>
+                        </p>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
+
+
+
+
+
