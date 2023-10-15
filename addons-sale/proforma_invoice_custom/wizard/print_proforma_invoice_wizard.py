@@ -9,7 +9,6 @@ class PrintProformaWizard(models.TransientModel):
 
     description = fields.Text(string='Description', required=True)
     amount = fields.Float(string="Amount", required=True)
-    qty = fields.Float(string="Quantity", default=1)
 
 
     def print_proforma_custom(self):
@@ -25,7 +24,6 @@ class PrintProformaWizard(models.TransientModel):
             # 'form': order.read()[0],
             'description': self.description,
             'amount': self.amount,
-            'quantity': self.qty,
             'payment_term': order.payment_term_id.name,
             'name': order.name,
             'partner': order.partner_id.name,
