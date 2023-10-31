@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="print_proforma_invoice_form" model="ir.ui.view">
+        <field name="name">print.proforma.invoice.wizard</field>
+        <field name="model">print.proforma.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Proforma Invoice">
+                <group>
+                    <group>
+                        <field name="amount"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="description"/>
+                </group>
+                <footer>
+                    <button name="print_proforma_custom" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="print_proforma_invoice_wizard" model="ir.actions.act_window">
+        <field name="name">Print Proforma Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">print.proforma.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">tree,form</field>
+    </record>
+
+</odoo>

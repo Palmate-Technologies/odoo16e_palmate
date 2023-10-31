@@ -713,16 +713,17 @@
 
             <t t-set="o_sec" t-value="o.with_context(lang='ar_001')"/>
             <t t-set="o" t-value="o.with_context(lang='en_US')"/>
+            <style>
+                @font-face { font-family: 'DroidKufiRegular'; src:
+                URL('/customized_invoice_palmate/static/src/fonts/DroidKufi-Regular.ttf') format('truetype'); }
+            </style>
 
             <div class="page">
 
-                <style>
-                    @font-face {
-                    font-family: 'ArabicDroidKufi';
-                    src: URL('/customized_invoice_palmate/static/src/fonts/Arabic-DroidKufi.ttf') format('truetype');
-                    }
-
-                </style>
+<!--                <style>-->
+<!--                    @font-face { font-family: 'DroidKufiRegular'; src:-->
+<!--                    URL('/customized_invoice_palmate/static/src/fonts/DroidKufi-Regular.ttf') format('truetype'); }-->
+<!--                </style>-->
 
                 <!-- Adjustment -->
                 <div style="display:none">
@@ -755,7 +756,7 @@
 
                             <br/>
 
-                            <span style="font-weight: normal; font-family:ArabicDroidKufi">
+                            <span style="font-weight: normal; font-family:DroidKufiRegular">
                                 <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
                                     فاتورة ضريبية
                                 </span>
@@ -797,32 +798,32 @@
                              </td>
                              <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:left;"><span>INVOICE NUMBER :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:center;"><span t-if="o.name != '/'" t-field="o.name"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:right; font-family:ArabicDroidKufi"><span>: رقم الفاتورة</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px solid #8d8d8d; padding:2px;  text-align:right; font-family:DroidKufiRegular"><span>: رقم الفاتورة</span></td>
                          </tr>
                          <tr>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>INVOICE DATE :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_date"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"><span style="white-space:nowrap">: تاريخ الفاتورة</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:DroidKufiRegular"><span style="white-space:nowrap">: تاريخ الفاتورة</span></td>
                          </tr>
                          <tr>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>DUE DATE :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_date_due"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: تاريخ الاستحقاق</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:DroidKufiRegular"> <span style="white-space:nowrap">: تاريخ الاستحقاق</span></td>
                          </tr>
                          <tr>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>SOURCE :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.invoice_origin"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: المصدر</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:DroidKufiRegular"> <span style="white-space:nowrap">: المصدر</span></td>
                          </tr>
                          <tr>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>CUSTOMER CODE :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.partner_id.ref"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: كود العميل</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:DroidKufiRegular"> <span style="white-space:nowrap">: كود العميل</span></td>
                          </tr>
                          <tr>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:left;"><span>REFERENCE :</span></td>
                              <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:center;"><span t-field="o.ref"/></td>
-                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:ArabicDroidKufi"> <span style="white-space:nowrap">: رقم الإشارة</span></td>
+                             <td style="border:1px solid #8d8d8d; border-top:0px; padding:2px;  text-align:right; font-family:DroidKufiRegular"> <span style="white-space:nowrap">: رقم الإشارة</span></td>
                          </tr>
                      </table>
 
@@ -840,7 +841,7 @@
                                         SL
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         الرقم
                                     </span>
                                 </td>
@@ -849,7 +850,7 @@
                                         Description
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         الوصف
                                     </span>
                                 </td>
@@ -858,7 +859,7 @@
                                         Source Document
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         المستند المصدر
                                     </span>
                                 </td>
@@ -867,7 +868,7 @@
                                         Quantity
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         الكمية
                                     </span>
                                 </td>
@@ -877,7 +878,7 @@
                                         Unit price
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         سعر الوحدة
                                     </span>
                                 </td>
@@ -887,7 +888,7 @@
                                         Disc.%
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         خصم %
                                     </span>
                                     <t t-set="colspan" t-value="colspan+1"/>
@@ -898,7 +899,7 @@
                                         Taxes
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         الضرائب
                                     </span>
                                 </td>
@@ -907,7 +908,7 @@
                                         Amount
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         مبلغ
                                     </span>
                                 </td>
@@ -917,7 +918,7 @@
                                         VAT Amount
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         قيمة الضريبة
                                     </span>
                                 </td>
@@ -926,7 +927,7 @@
                                         Total Price
                                     </span>
                                     <br/>
-                                    <span style="font-family:ArabicDroidKufi">
+                                    <span style="font-family:DroidKufiRegular">
                                         السعر الاجمالي
                                     </span>
                                 </td>
@@ -1030,7 +1031,7 @@
                                             <span>
                                                 Subtotal
                                                 /
-                                                <span style="font-family:ArabicDroidKufi">الإجمالي الفرعي</span>
+                                                <span style="font-family:DroidKufiRegular">الإجمالي الفرعي</span>
                                             </span>
                                         </td>
                                         <td  style="border:1px solid #8d8d8d;  padding:2px;" class="text-right">
@@ -1050,7 +1051,7 @@
                                                     <td style="border-style: hidden;">Taxes</td>
                                                     <td style="border-style: hidden;">(<span t-esc="tax_percent"/> %)</td>
                                                     <td style="border-style: hidden;">/</td>
-                                                    <td style="border-style: hidden;"><span style="font-family:ArabicDroidKufi">الضريبة</span></td>
+                                                    <td style="border-style: hidden;"><span style="font-family:DroidKufiRegular">الضريبة</span></td>
                                                 </tr>
                                             </table>
                                             <span>
@@ -1068,7 +1069,7 @@
                                             <span>
                                                 Total
                                                 /
-                                                <span style="font-family:ArabicDroidKufi">المجموع</span>
+                                                <span style="font-family:DroidKufiRegular">المجموع</span>
 
                                             </span>
                                         </td>
@@ -1123,7 +1124,7 @@
                         <tr>
                             <td style="width:50%; border-style: hidden;">
                                 <span>Payment Reference:</span><span t-field="o.name"/><br/>
-                                <span>رقم إشارة الدفعة</span><br/>
+                                <span style="font-family:DroidKufiRegular" >رقم إشارة الدفعة</span><br/>
                                 <span>Payment terms:</span><span t-field="o.invoice_payment_term_id.name"/>
                             </td>
                             <td style="width:50%; border-style: hidden;">

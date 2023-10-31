@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+
+
+<!--        <record id="proforma_invoice_report_custom" model="ir.actions.report">-->
+<!--            <field name="name">Proforma Invoice Custom</field>-->
+<!--            <field name="model">print.proforma.wizard</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_name">proforma_invoice_custom.report_proforma_invoice_custom</field>-->
+<!--            <field name="report_file">proforma_invoice_custom.report_proforma_invoice_custom</field>-->
+<!--            <field name="binding_model_id" ref="proforma_invoice_custom.model_print_proforma_wizard"/>-->
+<!--            <field name="binding_type">report</field>-->
+<!--        </record>-->
+
+        <record id="proforma_invoice_report_custom" model="ir.actions.report">
+            <field name="name">Proforma Invoice Custom</field>
+            <field name="model">print.proforma.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">proforma_invoice_custom.report_proforma_invoice_custom</field>
+            <field name="report_file">proforma_invoice_custom.report_proforma_invoice_custom</field>
+            <field name="binding_model_id" ref="proforma_invoice_custom.model_print_proforma_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>
+
+
+
+
+
