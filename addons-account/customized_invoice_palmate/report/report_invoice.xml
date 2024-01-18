@@ -1049,7 +1049,7 @@
                                             <table style="border-style: hidden;">
                                                 <tr>
                                                     <td style="border-style: hidden;">Taxes</td>
-                                                    <td style="border-style: hidden;">(<span t-esc="tax_percent"/> %)</td>
+                                                    <td style="border-style: hidden;">(<span t-esc="'%0.2f' % tax_percent"/> %)</td>
                                                     <td style="border-style: hidden;">/</td>
                                                     <td style="border-style: hidden;"><span style="font-family:DroidKufiRegular">الضريبة</span></td>
                                                 </tr>
