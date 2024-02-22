@@ -20,7 +20,7 @@
     'summary': """""",
     'description': """""",
     'category': 'Services/Helpdesk',
-    'version': '1.0',
+    'version': '1.2',
     'author': 'Palmate',
     'website': "",
     'license': 'AGPL-3',
