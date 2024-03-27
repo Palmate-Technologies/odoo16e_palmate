@@ -1,0 +1,67 @@
+<odoo>
+
+
+    <template id="employee_timesheet" name="Website Contact Form" active="True"> 
+        <t t-call="website.layout">
+            <div class="container">
+            <h5>Enter your working hours here:</h5>
+                <form class="form-horizontal" role="form" action="/submit_form" method="post">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Date:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" name="date" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Project:</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="project_id" name="project_id">
+                <t t-foreach="projects2" t-as="project">
+                        <option t-att-value="project.name" >
+                            <t />
+                        </option>
+                    </t>
+                    <t t-foreach="projects" t-as="project">
+                        <option t-att-value="project.id" >
+                            <t t-esc="project.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Task:</label>
+            <div class="col-sm-10">
+                <select class="form-control"  id="task_id" name="task_id" required="required">
+        
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">`Description:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="des" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Hours:</label>
+            <div class="col-sm-10">
+        <input type="text" class="form-control" name="hours"  placeholder="HH:MM" required="required" pattern="^\d{1,2}:\d{2}$" title="Please enter a valid duration (HH:MM)"/>
+
+            </div>
+        </div>
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+
+
+
+
+            <record id="view_task_form_form_extended2" model="ir.ui.view">
+            <field name="name">project.task.form.form.extended2</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" position='replace'>
+                                <field name="user_ids"
+                                class="o_task_user_field"
+                                options="{'no_open': True, 'no_quick_create': True}"
+                                widget="many2many_avatar_user"
+                                domain="[('active', '=', True)]"/>
+                                </xpath>
+            </field>
+            </record>
+
+
+  </data>
+</odoo>
