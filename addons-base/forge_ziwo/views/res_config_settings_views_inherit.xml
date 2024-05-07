@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.forge.ziwo</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Ziwo" data-key="forge_ziwo" string="Ziwo">
+                        <h2>Call History</h2> <!-- we can add group here for it to only show up for certain users-->
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box" id="forge_ziwo_active_forms">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Active Forms</span>
+                                    <div class="text-muted">
+                                        Default system behavior during a call if History on Active Form is unchecked or if Agent is not on an applicable active form
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label for="forge_ziwo_active_form_id" class="col-lg-4 o_light_label"/>
+                                            <field name="forge_ziwo_active_form_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                                        </div>
+                                        <div class="mt8">
+                                            <button type="action" name="%(forge_ziwo_active_form_action)d" string="Applicable Forms" class="btn-link" icon="fa-arrow-right"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="o_setting_left_pane">
+                                    <field name="forge_ziwo_active_form_history"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_active_form_history"/>
+                                    <div class="text-muted">
+                                            Add the model to the call history if you are on an applicable active form by the end of the call
+                                    </div>
+                                </div>
+                                <!-- <br/>
+                                <div class="o_setting_left_pane">
+                                    <field name="forge_ziwo_private_call_recording"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_private_call_recording"/>
+                                    <div class="text-muted">
+                                            Enable call recordings to only be visible to the user who made the call, received the call, or if user has a manager role
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="forge_ziwo_navigate">
+                                <div class="o_setting_left_pane">
+                                    <field name="forge_ziwo_navigate_outbound_calls"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_navigate_outbound_calls"/>
+                                    <div class="text-muted">
+                                            Navigate to Agent Screen when an outbound call is made
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="o_setting_left_pane">
+                                    <field name="forge_ziwo_navigate_inbound_calls"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_navigate_inbound_calls"/>
+                                    <div class="text-muted">
+                                            Navigate to Agent Screen when an inbound call is received
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="o_setting_left_pane">
+                                    <field name="forge_ziwo_navigate_outbound_calls_c2c"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_navigate_outbound_calls_c2c"/>
+                                    <div class="text-muted">
+                                            Overide navigate to Agent Screen when an outbound call is made through click to call
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="forge_ziwo_admin_auth_token"/>
+                                    <div class="text-muted">
+                                            Update any missing recordings not belonging to the current user by using the admin auth token
+                                    </div>
+                                    <div>
+                                        <field name="forge_ziwo_admin_auth_token" password="True"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_config_settings_menu_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module':'forge_ziwo'}</field>
+        </record>
+    </data>
+</odoo>
